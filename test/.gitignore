@@ -1,0 +1,19 @@
+*.dSYM
+obj
+bin
+
+# Added just in case one does an in-source cmake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+
+build
+packages
+xcode
