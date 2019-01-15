@@ -4,10 +4,10 @@
 
 Here are my solutions to the *CTCI* problems.  You can find the solutions from the author herself [here](http://www.crackingthecodinginterview.com/solutions.html).
 
-No.  | Name           
+ \#  | Interview Questions
 ---  | ---------------
 4.   | ***Chapter 4 - Trees and Graphs***
-4.1. | [Route Between Nodes](src/routeBetweenNodes.cpp) 
+4.1  | [Route Between Nodes](src/routeBetweenNodes.cpp) 
 
 <!--
 | *Lesson Template* | |

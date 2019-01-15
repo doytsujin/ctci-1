@@ -1,7 +1,7 @@
-#ifndef CITC_TEMPLATE_H
-#define CITC_TEMPLATE_H
+#ifndef CTCI_TEMPLATE_H
+#define CTCI_TEMPLATE_H
 
-namespace Problem
+namespace ctci
 {
     void solution(void);
 }

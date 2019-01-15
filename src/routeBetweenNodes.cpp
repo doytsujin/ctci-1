@@ -1,4 +1,4 @@
-// CTCI exercise
+// Citc exercise
 // 
 
 #include <iostream>
