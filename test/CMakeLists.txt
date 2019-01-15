@@ -71,12 +71,9 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/gflags-src
 # Put the binaries into "bin/"
 #
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin/")
-
 include_directories(include ../include)
 
-add_executable (ctci 
-                ../src/util/node.cpp
-                ../src/util/graph.cpp
-                src/main.cpp
-               )
+file(GLOB_RECURSE SOURCES "../src/*.cpp")
+
+add_executable (ctci ${SOURCES} src/main.cpp)
 target_link_libraries(ctci gflags::gflags gtest_main)

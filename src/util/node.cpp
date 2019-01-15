@@ -14,47 +14,13 @@ using namespace std;
 using namespace ctci;
 using namespace ctci::util;
 
-template <typename T>
-Node<T>::Node(T t)
-{
-    value = t;
-    visitState = Unvisited;
-}
-
-template <typename T>
-bool Node<T>::insert(vector<pair<T, shared_ptr<Node<T>>>> &elements)
-{
-    bool result = true;
-    for (const auto &e: elements) {
-        result &= insert(e);
-    }
-    return result;
-}
-
-template <typename T>
-bool Node<T>::insert(const pair<T, shared_ptr<Node<T>>> &element)
-{
-    bool result = true;
-
-    // Add the connection if it does not already exist
-    shared_ptr<Node<T>> connection;
-    auto searchConnection = connections.find(element.first);
-    if (searchConnection == connections.end()) {
-        connections.emplace(element);
-    } else {
-        result = false;
-    }
-
-    return result;
-}
-
 TEST(Node, Initialize)
 {
     int value = 5;
     Node<int> node(value);
 
     ASSERT_EQ(node.value, value);
-    ASSERT_EQ(node.visitState, Unvisited);
+    ASSERT_EQ(node.visitState, UNVISITED);
 }
 
 TEST(Node, Cout)
