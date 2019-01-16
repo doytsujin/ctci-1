@@ -15,7 +15,7 @@ using namespace ctci::util;
 using namespace ctci;
 using namespace std;
 
-TEST(RouteBetweenNodes, BFS)
+TEST(RouteBetweenNodes, BREADTH_FIRST_SEARCH)
 {
     Graph<int> graph;
 
@@ -28,19 +28,19 @@ TEST(RouteBetweenNodes, BFS)
     graph.insert(edges);
 
     // Will pass!
-    ASSERT_EQ(graph.isConnected(1, 5, BFS), true);
+    ASSERT_EQ(graph.isConnected(1, 5, BREADTH_FIRST_SEARCH), true);
 
     // Not a bi-directional graph, so should fail
-    ASSERT_EQ(graph.isConnected(5, 1, BFS), false);
+    ASSERT_EQ(graph.isConnected(5, 1, BREADTH_FIRST_SEARCH), false);
 
     // Checking for route to node that doesn't exist
-    ASSERT_EQ(graph.isConnected(6, 1, BFS), false);
+    ASSERT_EQ(graph.isConnected(6, 1, BREADTH_FIRST_SEARCH), false);
 
     // Check for route to self (should fail)
-    ASSERT_EQ(graph.isConnected(2, 2, BFS), false);
+    ASSERT_EQ(graph.isConnected(2, 2, BREADTH_FIRST_SEARCH), false);
 
     // Check for route between two nodes that don't exist (false)
-    ASSERT_EQ(graph.isConnected(7, 7, BFS), false);
+    ASSERT_EQ(graph.isConnected(7, 7, BREADTH_FIRST_SEARCH), false);
 }
 
 TEST(RouteBetweenNodes, DFS)
@@ -56,19 +56,19 @@ TEST(RouteBetweenNodes, DFS)
     graph.insert(edges);
 
     // Will pass!
-    ASSERT_EQ(graph.isConnected(1, 5, DFS), true);
+    ASSERT_EQ(graph.isConnected(1, 5, DEPTH_FIRST_SEARCH), true);
 
     // Not a bi-directional graph, so should fail
-    ASSERT_EQ(graph.isConnected(5, 1, DFS), false);
+    ASSERT_EQ(graph.isConnected(5, 1, DEPTH_FIRST_SEARCH), false);
 
     // Checking for route to node that doesn't exist
-    ASSERT_EQ(graph.isConnected(6, 1, DFS), false);
+    ASSERT_EQ(graph.isConnected(6, 1, DEPTH_FIRST_SEARCH), false);
 
     // Check for route to self (should fail)
-    ASSERT_EQ(graph.isConnected(2, 2, DFS), false);
+    ASSERT_EQ(graph.isConnected(2, 2, DEPTH_FIRST_SEARCH), false);
 
     // Check for route between two nodes that don't exist (false)
-    ASSERT_EQ(graph.isConnected(7, 7, DFS), false);
+    ASSERT_EQ(graph.isConnected(7, 7, DEPTH_FIRST_SEARCH), false);
 }
 
 TEST(RouteBetweenNodes, CyclicDFS)
@@ -84,7 +84,7 @@ TEST(RouteBetweenNodes, CyclicDFS)
     };
     graph.insert(edges);
 
-    const SearchTypeEnum searchType = DFS;
+    const SearchTypeEnum searchType = DEPTH_FIRST_SEARCH;
     ASSERT_EQ(graph.isConnected(1, 3, searchType), true);
 
     // should fail if we don't reset
@@ -119,7 +119,7 @@ TEST(RouteBetweenNodes, CyclicBFS)
     };
     graph.insert(edges);
 
-    const SearchTypeEnum searchType = BFS;
+    const SearchTypeEnum searchType = BREADTH_FIRST_SEARCH;
     ASSERT_EQ(graph.isConnected(1, 3, searchType), true);
     ASSERT_EQ(graph.isConnected(3, 1, searchType), true);
     ASSERT_EQ(graph.isConnected(2, 4, searchType), true);

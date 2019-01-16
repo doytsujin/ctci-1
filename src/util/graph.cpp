@@ -82,10 +82,12 @@ TEST(Graph, Insert)
 
 TEST(Graph, Cout)
 {
-    Graph<string> graph;
+    Graph<string> graph(UNDIRECTED);
+    Graph<string> digraph(DIRECTED);
 
     vector<string> solo = {"solo"};
     graph.insert(solo);
+    digraph.insert(solo);
 
     vector<pair<string, string>> edges = {
         {"a", "b"},
@@ -97,16 +99,37 @@ TEST(Graph, Cout)
     };
 
     graph.insert(edges);
+    digraph.insert(edges);
 
-    stringstream output;
-    output << graph;
-    string expected = 
-        "a -> b, c\n" \
-        "b -> c, d\n" \
-        "c -> b\n" \
-        "d -> e\n" \
-        "e ->\n" \
-        "solo ->\n";
+    stringstream dOutput;
+    stringstream dgOutput;
 
-    ASSERT_EQ(output.str(), expected);
+    dOutput << graph;
+    dgOutput << digraph;
+
+    string dExpected = 
+        "graph {\n" \
+        "  a -- {b c}\n" \
+        "  b -- {c d}\n" \
+        "  c -- {b}\n" \
+        "  d -- {e}\n" \
+        "  e -- {}\n" \
+        "  solo -- {}\n" \
+        "}";
+
+    string dgExpected = 
+        "digraph {\n" \
+        "  a -> {b c}\n" \
+        "  b -> {c d}\n" \
+        "  c -> {b}\n" \
+        "  d -> {e}\n" \
+        "  e -> {}\n" \
+        "  solo -> {}\n" \
+        "}";
+
+    cout << dOutput.str() << endl;
+    cout << dgOutput.str() << endl;
+
+    ASSERT_EQ(dOutput.str(), dExpected);
+    ASSERT_EQ(dgOutput.str(), dgExpected);
 }

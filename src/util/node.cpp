@@ -27,10 +27,11 @@ TEST(Node, Cout)
 {
     // Simple test
     string test = "test";
-    Node<string> node(test);
+    const NodeTypeEnum nodeType = DIRECTED;
+    Node<string> node(test, nodeType);
     stringstream testOutput;
     testOutput << node;
-    string testExpected = "test ->";
+    string testExpected = "test -> {}";
     ASSERT_EQ(testOutput.str(), testExpected);
 
     // Complicated test
@@ -39,20 +40,20 @@ TEST(Node, Cout)
     string nodeTwo = "b";
     string nodeThree = "c";
 
-    shared_ptr<Node<string>> node1(new Node<string>(nodeOne));
-    shared_ptr<Node<string>> node2(new Node<string>(nodeTwo));
-    shared_ptr<Node<string>> node3(new Node<string>(nodeThree));
+    shared_ptr<Node<string>> node1(new Node<string>(nodeOne, nodeType));
+    shared_ptr<Node<string>> node2(new Node<string>(nodeTwo, nodeType));
+    shared_ptr<Node<string>> node3(new Node<string>(nodeThree, nodeType));
 
     vector<pair<string, shared_ptr<Node<string>>>> adjacencyList = {{nodeTwo, node2}, {nodeThree, node3}};
     node1->insert(adjacencyList);
 
-    string expectedOne = "a -> b, c";
+    string expectedOne = "a -> {b c}";
     stringstream outputOne;
 
-    string expectedTwo = "b ->";
+    string expectedTwo = "b -> {}";
     stringstream outputTwo;
 
-    string expectedThree = "c ->";
+    string expectedThree = "c -> {}";
     stringstream outputThree;
 
     outputOne << *node1;

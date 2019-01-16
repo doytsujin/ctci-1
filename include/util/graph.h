@@ -15,12 +15,18 @@ namespace ctci
     {
         using namespace std;
 
-        enum SearchTypeEnum {DFS, BFS};
+        enum SearchTypeEnum {
+            DEPTH_FIRST_SEARCH, 
+            BREADTH_FIRST_SEARCH
+        };
 
         template <typename T>
             class Graph {
                 public:
+                    Graph(NodeTypeEnum nodeType = UNDIRECTED) : nodeType(nodeType) {};
+
                     std::map<T, std::shared_ptr<Node<T>>> nodes;
+                    const NodeTypeEnum nodeType;
 
                     // Insert in a set of nodes into the graph (without children)
                     // Will return false if any of the nodes already exist
@@ -44,7 +50,7 @@ namespace ctci
                         // Create it if it doesn't exist.
                         auto found = nodes.find(element);
                         if (found == nodes.end()) {
-                            shared_ptr<Node<T>> node (new Node<T>(element));
+                            shared_ptr<Node<T>> node (new Node<T>(element, nodeType));
                             nodes.insert({element, node});
                         }
 
@@ -76,7 +82,7 @@ namespace ctci
                         if (searchParent != nodes.end()) {
                             parent = searchParent->second;
                         } else {
-                            shared_ptr<Node<T>> temp (new Node<T>(edge.first));
+                            shared_ptr<Node<T>> temp (new Node<T>(edge.first, nodeType));
                             parent = temp;
                             nodes.insert({edge.first, parent});
                         }
@@ -88,7 +94,7 @@ namespace ctci
                         if (searchChild != nodes.end()) {
                             child = searchChild->second;
                         } else {
-                            shared_ptr<Node<T>> temp (new Node<T>(edge.second));
+                            shared_ptr<Node<T>> temp (new Node<T>(edge.second, nodeType));
                             child = temp;
                             nodes.insert({edge.second, child});
                         }
@@ -102,7 +108,8 @@ namespace ctci
                     }
 
                     bool isConnected(const T &a, const T &b, 
-                            SearchTypeEnum searchType=DFS, bool resetVisitState = true)
+                            SearchTypeEnum searchType=DEPTH_FIRST_SEARCH, 
+                            bool resetVisitState = true)
                     {
                         bool found = false;
 
@@ -120,10 +127,10 @@ namespace ctci
 
                         if ( (nodeA != nodes.end()) && (nodeB != nodes.end()) ) {
                             switch (searchType) {
-                                case (DFS):
+                                case (DEPTH_FIRST_SEARCH):
                                     found = depthFirstSearch(nodeA->second, b);
                                     break;
-                                case (BFS):
+                                case (BREADTH_FIRST_SEARCH):
                                     found = breadthFirstSearch(nodeA->second, b);
                                     break;
                                 default:
@@ -189,9 +196,22 @@ namespace ctci
                     }
 
                     friend std::ostream& operator<<(std::ostream& os, const Graph &graph) {
-                        for ( const auto &n: graph.nodes ) {
-                            os << *(n.second) << std::endl;
+                        string dotGraph = "unknown";
+                        switch (graph.nodeType) {
+                            case DIRECTED: 
+                                dotGraph = "digraph"; 
+                                break;
+                            case UNDIRECTED: 
+                            case BINARY_TREE: 
+                            default:
+                                dotGraph = "graph"; 
+                                break;
                         }
+                        os << dotGraph << " {" << endl;
+                        for ( const auto &n: graph.nodes ) {
+                            os << "  " << *(n.second) << std::endl;
+                        }
+                        os << "}";
                         return os;
                     }
 
