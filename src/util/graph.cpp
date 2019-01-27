@@ -127,9 +127,6 @@ TEST(Graph, Cout)
         "  solo -> {}\n" \
         "}";
 
-    cout << dOutput.str() << endl;
-    cout << dgOutput.str() << endl;
-
     ASSERT_EQ(dOutput.str(), dExpected);
     ASSERT_EQ(dgOutput.str(), dgExpected);
 }

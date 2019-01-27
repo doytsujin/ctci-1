@@ -30,7 +30,7 @@ TEST(RouteBetweenNodes, BREADTH_FIRST_SEARCH)
     // Will pass!
     ASSERT_EQ(graph.isConnected(1, 5, BREADTH_FIRST_SEARCH), true);
 
-    // Not a bi-directional graph, so should fail
+    // Not a undirected graph, so should fail
     ASSERT_EQ(graph.isConnected(5, 1, BREADTH_FIRST_SEARCH), false);
 
     // Checking for route to node that doesn't exist
@@ -58,7 +58,7 @@ TEST(RouteBetweenNodes, DFS)
     // Will pass!
     ASSERT_EQ(graph.isConnected(1, 5, DEPTH_FIRST_SEARCH), true);
 
-    // Not a bi-directional graph, so should fail
+    // Not a undirected graph, so should fail
     ASSERT_EQ(graph.isConnected(5, 1, DEPTH_FIRST_SEARCH), false);
 
     // Checking for route to node that doesn't exist

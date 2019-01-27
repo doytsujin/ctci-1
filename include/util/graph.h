@@ -25,6 +25,7 @@ namespace ctci
                 public:
                     Graph(NodeTypeEnum nodeType = UNDIRECTED) : nodeType(nodeType) {};
 
+                    std::vector<shared_ptr<Node<T>>> visited;
                     std::map<T, std::shared_ptr<Node<T>>> nodes;
                     const NodeTypeEnum nodeType;
 
@@ -113,12 +114,12 @@ namespace ctci
                     {
                         bool found = false;
 
-                        // TODO: Fix marking nodes for visit, can't go through a 
-                        // list and reset all of them, not scalable
+                        // Only reset visited nodes
                         if ( resetVisitState ) {
-                            for (auto const &n: nodes) {
-                                n.second->visitState = UNVISITED;
+                            for (auto const &n: visited) {
+                                n->visitState = UNVISITED;
                             }
+                            visited.clear();
                         }
 
                         // Make sure a and b exist in the graph, quick return otherwise
@@ -149,6 +150,7 @@ namespace ctci
 
                         if ( (node != nullptr) && node->visitState == UNVISITED ) {
                             node->visitState = VISITED;
+                            visited.push_back(node);
 
                             for (const auto &c: node->connections) {
                                 if ( c.first == b) {
@@ -179,6 +181,7 @@ namespace ctci
 
                         if ( (node != nullptr) && node->visitState == UNVISITED ) {
                             node->visitState = VISITED;
+                            visited.push_back(node);
 
                             for (const auto &c: node->connections) {
                                 if ( c.first == b ) {
